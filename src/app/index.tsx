@@ -1,7 +1,7 @@
 import './index.css';
 
-import { createRoot } from 'react-dom/client';
 import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
 import App from './ui/App';
 
@@ -13,3 +13,6 @@ rootElement &&
       <App />
     </StrictMode>
   );
+
+// @ts-expect-error esbuild will define IS_PRODUCTION
+window.IS_PRODUCTION || new EventSource('/esbuild').addEventListener('change', () => location.reload());

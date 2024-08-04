@@ -1,6 +1,6 @@
+import random from 'math-random';
 import createDeferred from 'p-defer';
 import Observable from './private/Observable';
-import random from 'math-random';
 // @ts-expect-error missing typings
 import updateIn from 'simple-update-in';
 
@@ -158,8 +158,8 @@ export default function createDirectLineEmulator({
           typeof timestamp === 'number'
             ? new Date(now + timestamp).toISOString()
             : typeof timestamp === 'undefined'
-            ? getTimestamp()
-            : timestamp
+              ? getTimestamp()
+              : timestamp
         );
         activity = updateIn(activity, ['type'], (type: WebChatActivity['type']) => type || 'message');
       }
