@@ -1,10 +1,12 @@
 import './WebChat.css';
 
 import { Components } from 'botframework-webchat';
-import { StyleOptions, type AttachmentMiddleware } from 'botframework-webchat-api';
+import { ActivityMiddleware, StyleOptions, type AttachmentMiddleware } from 'botframework-webchat-api';
 import { FluentThemeProvider } from 'botframework-webchat-fluent-theme';
-import { memo, useCallback, useMemo, useState, type FormEventHandler, type FunctionComponent } from 'react';
+import { memo, useCallback, useMemo, useRef, useState, type FormEventHandler, type FunctionComponent } from 'react';
+import ActivitiesObserver, { type ActivitiesObserverProps } from './ActivitiesObserver';
 import StarterPrompts from './StarterPrompts';
+import isStarterPromptsActivity from './isStarterPromptsActivity';
 
 const { BasicWebChat, Composer } = Components;
 
@@ -17,20 +19,38 @@ type Props = Readonly<{
 }>;
 
 export default memo(function Chat({ directLine, store }: Props) {
+  const numActivitiesRef = useRef<number>(0);
+
+  const handleActivities = useCallback<ActivitiesObserverProps['onActivities']>(
+    activities => {
+      numActivitiesRef.current = activities.length;
+    },
+    [numActivitiesRef]
+  );
+
+  const activityMiddleware = useMemo<ActivityMiddleware>(
+    () =>
+      () =>
+      next =>
+      (...args) => {
+        if (isStarterPromptsActivity(args[0].activity) && numActivitiesRef.current > 1) {
+          // TODO: We could treat the card differently.
+          return false;
+        }
+
+        return next(...args);
+      },
+    [numActivitiesRef]
+  );
+
   const attachmentMiddleware = useMemo<AttachmentMiddleware>(
     () =>
       () =>
       next =>
       (...args) => {
-        console.log('attachmentMiddleware', ...args);
-
         const activity = args[0]?.activity;
 
-        if (
-          activity?.type === 'message' &&
-          activity.suggestedActions?.actions?.length &&
-          args[0]?.attachment.contentType === 'text/markdown'
-        ) {
+        if (activity && isStarterPromptsActivity(activity) && args[0]?.attachment.contentType === 'text/markdown') {
           return (
             <div>
               {next(...args)}
@@ -58,11 +78,13 @@ export default memo(function Chat({ directLine, store }: Props) {
 
   const webChatElement = (
     <Composer
+      activityMiddleware={activityMiddleware}
       attachmentMiddleware={attachmentMiddleware}
       directLine={directLine}
       store={store}
       styleOptions={styleOptions}
     >
+      <ActivitiesObserver onActivities={handleActivities} />
       <BasicWebChat />
     </Composer>
   );
