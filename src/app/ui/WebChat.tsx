@@ -2,6 +2,7 @@ import './WebChat.css';
 
 import { Components } from 'botframework-webchat';
 import { StyleOptions, type AttachmentMiddleware } from 'botframework-webchat-api';
+import { FluentThemeProvider } from 'botframework-webchat-fluent-theme';
 import { memo, useMemo, type FunctionComponent } from 'react';
 import StarterPrompts from './StarterPrompts';
 
@@ -48,14 +49,16 @@ export default memo(function Chat({ directLine, store }: Props) {
 
   return (
     <div className="chat">
-      <Composer
-        attachmentMiddleware={attachmentMiddleware}
-        directLine={directLine}
-        store={store}
-        styleOptions={styleOptions}
-      >
-        <BasicWebChat />
-      </Composer>
+      <FluentThemeProvider>
+        <Composer
+          attachmentMiddleware={attachmentMiddleware}
+          directLine={directLine}
+          store={store}
+          styleOptions={styleOptions}
+        >
+          <BasicWebChat />
+        </Composer>
+      </FluentThemeProvider>
     </div>
   );
 });
