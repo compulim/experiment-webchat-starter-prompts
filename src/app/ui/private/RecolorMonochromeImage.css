@@ -4,6 +4,6 @@
 
 @media (prefers-color-scheme: dark) {
   .recolor-monochrome-image {
-    background-color: Red;
+    background-color: Red; /* TODO: Should be #999 but need to double-check. */
   }
 }

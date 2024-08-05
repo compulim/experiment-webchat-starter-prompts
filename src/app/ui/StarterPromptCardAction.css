@@ -1,9 +1,9 @@
 .starter-prompt-card-action {
   appearance: none;
-  background-color: var(--webchat-colorNeutralBackground1,);
-  border: solid 1px var(--webchat-colorNeutralStroke1);
+  background-color: var(--webchat-colorNeutralBackground1, #fff);
+  border: solid 1px var(--webchat-colorNeutralStroke1, #d1d1d1);
   border-radius: 4px;
-  color: var(--webchat-colorNeutralForegroundColor1);
+  color: var(--webchat-colorNeutralForeground1, #242424);
   cursor: pointer;
   display: grid;
   gap: 8px;
@@ -17,7 +17,7 @@
 
 .starter-prompt-card-action:disabled {
   background-color: var(--webchat-colorNeutralBackground1Disabled, #f0f0f0); /* Needs to add to Web Chat. */
-  border-color: var(--webchat-colorNeutralStroke2);
+  border-color: var(--webchat-colorNeutralStroke2, #e0e0e0);
 }
 
 .starter-prompt-card-action:hover {
@@ -34,7 +34,7 @@
 }
 
 .starter-prompt-card-action:focus-visible {
-  outline: solid 2px var(--webchat-colorStrokeFocus2);
+  outline: solid 2px var(--webchat-colorStrokeFocus2, #000);
   outline-offset: -2px;
 }
 
