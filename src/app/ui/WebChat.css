@@ -1,4 +1,6 @@
 .chat {
+  container-name: webchat-container;
+  container-type: size;
   height: 100%;
   position: relative;
 }

@@ -5,7 +5,7 @@ import { memo, useMemo } from 'react';
 import ActivityInput from './ActivityInput';
 import onErrorResumeNext from '../util/onErrorResumeNext';
 import useAppReducer from '../data/useAppReducer';
-import WebChat from './WebChat';
+import WebChatFromActivities from './WebChatFromActivities';
 
 export default memo(function App() {
   const [{ activitiesJSON }, { setActivitiesJSON }] = useAppReducer();
@@ -17,7 +17,7 @@ export default memo(function App() {
         <ActivityInput onChange={setActivitiesJSON} value={activitiesJSON} />
       </div>
       <div className="app__pane">
-        <WebChat activities={activities} key={activitiesJSON} />
+        <WebChatFromActivities activities={activities} key={activitiesJSON} />
       </div>
     </div>
   );
