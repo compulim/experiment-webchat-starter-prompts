@@ -21,7 +21,10 @@
 
 .starter-prompt-card-action:hover {
   background-color: var(--webchat-colorNeutralGrey94, #f0f0f0); /* Needs to add to Web Chat. */
-  border-color: var(--webchat-colorNeutralGrey88, #c7c7c7); /* Needs to add to Web Chat: Fluent AI say #c7c7c7, Fluent UI say #e0e0e0 */
+  border-color: var(
+    --webchat-colorNeutralGrey88,
+    #c7c7c7
+  ); /* Needs to add to Web Chat: Fluent AI say #c7c7c7, Fluent UI say #e0e0e0 */
 }
 
 .starter-prompt-card-action:active {
@@ -39,7 +42,7 @@
 }
 
 .starter-prompt-card-action__subtitle {
-  font-family: 'Segoe UI';
+  font-family: var(--webchat-fontFamilyBase);
   font-size: 14px;
   font-weight: 400;
   grid-area: subtitle;
@@ -48,7 +51,7 @@
 }
 
 .starter-prompt-card-action__title {
-  font-family: 'Segoe UI';
+  font-family: var(--webchat-fontFamilyBase);
   font-size: 14px;
   font-weight: 600;
   grid-area: title;

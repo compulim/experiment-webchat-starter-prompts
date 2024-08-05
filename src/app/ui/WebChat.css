@@ -1,6 +1,13 @@
 .chat {
   container-name: webchat-container;
   container-type: size;
+  display: grid;
+  gap: 8px;
+  grid-template-rows: 1fr auto;
   height: 100%;
   position: relative;
+}
+
+.chat__fluent-toggle {
+  font-family: 'Segoe UI';
 }

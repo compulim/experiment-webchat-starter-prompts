@@ -3,7 +3,7 @@ import './WebChat.css';
 import { Components } from 'botframework-webchat';
 import { StyleOptions, type AttachmentMiddleware } from 'botframework-webchat-api';
 import { FluentThemeProvider } from 'botframework-webchat-fluent-theme';
-import { memo, useMemo, type FunctionComponent } from 'react';
+import { memo, useCallback, useMemo, useState, type FormEventHandler, type FunctionComponent } from 'react';
 import StarterPrompts from './StarterPrompts';
 
 const { BasicWebChat, Composer } = Components;
@@ -47,18 +47,35 @@ export default memo(function Chat({ directLine, store }: Props) {
   // TODO: Should we override Web Chat default of bubble max width of 480px?
   const styleOptions = useMemo<StyleOptions>(() => ({ bubbleMaxWidth: 768 }), []);
 
+  const [shouldUseFluentSkinpack, setShouldUseFluentSkinpack] = useState(true);
+
+  const handleShouldUseFluentSkinpackClick = useCallback<FormEventHandler<HTMLInputElement>>(
+    ({ currentTarget: { checked } }) => {
+      setShouldUseFluentSkinpack(checked);
+    },
+    [setShouldUseFluentSkinpack]
+  );
+
+  const webChatElement = (
+    <Composer
+      attachmentMiddleware={attachmentMiddleware}
+      directLine={directLine}
+      store={store}
+      styleOptions={styleOptions}
+    >
+      <BasicWebChat />
+    </Composer>
+  );
+
   return (
     <div className="chat">
-      <FluentThemeProvider>
-        <Composer
-          attachmentMiddleware={attachmentMiddleware}
-          directLine={directLine}
-          store={store}
-          styleOptions={styleOptions}
-        >
-          <BasicWebChat />
-        </Composer>
-      </FluentThemeProvider>
+      {shouldUseFluentSkinpack ? <FluentThemeProvider>{webChatElement}</FluentThemeProvider> : webChatElement}
+      <div className="chat__fluent-toggle">
+        <label>
+          <input checked={shouldUseFluentSkinpack} onChange={handleShouldUseFluentSkinpackClick} type="checkbox" />
+          Use Fluent skin pack
+        </label>
+      </div>
     </div>
   );
 });
