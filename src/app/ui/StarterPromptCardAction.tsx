@@ -4,6 +4,7 @@ import { hooks } from 'botframework-webchat';
 import { type DirectLineCardAction } from 'botframework-webchat-core';
 import classNames from 'classnames';
 import { memo, useCallback, useMemo } from 'react';
+import RecolorMonochromeImage from './private/RecolorMonochromeImage';
 
 const { useFocus, useRenderMarkdownAsHTML, useSendBoxValue } = hooks;
 
@@ -32,7 +33,8 @@ export default memo(function StarterPromptAction({ className, messageBackAction 
     <button className={classNames(className, 'starter-prompt-card-action')} onClick={handleClick}>
       <div className="starter-prompt-card-action__title">{'title' in messageBackAction && messageBackAction.title}</div>
       {'image' in messageBackAction && messageBackAction.image && (
-        <img className="starter-prompt-card-action__image" src={messageBackAction.image} />
+        <RecolorMonochromeImage className="starter-prompt-card-action__image" src={messageBackAction.image} />
+        // <img className="starter-prompt-card-action__image" src={messageBackAction.image} />
       )}
       <div className="starter-prompt-card-action__subtitle" dangerouslySetInnerHTML={subtitleHTML} />
     </button>

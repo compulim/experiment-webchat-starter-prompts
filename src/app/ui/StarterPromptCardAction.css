@@ -40,6 +40,8 @@
 
 .starter-prompt-card-action__image {
   grid-area: image;
+  height: 20px;
+  width: 20px;
 }
 
 .starter-prompt-card-action__subtitle {
