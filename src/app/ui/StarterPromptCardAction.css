@@ -4,6 +4,7 @@
   border: solid 1px var(--webchat-colorNeutralStroke1);
   border-radius: 4px;
   color: var(--webchat-colorNeutralForegroundColor1);
+  cursor: pointer;
   display: grid;
   gap: 8px;
   grid-template-areas: 'image title' 'image subtitle';
