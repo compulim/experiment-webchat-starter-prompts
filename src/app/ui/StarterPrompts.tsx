@@ -13,6 +13,7 @@ type Props = Readonly<{
 
 export default memo(function StarterPrompts({ cardActions, className }: Props) {
   return (
+    // TODO: Accessibility-wise, this should be role="toolbar" with keyboard navigation.
     <div className={classNames(className, 'starter-prompts')}>
       {cardActions
         .filter<DirectLineCardAction & { type: 'messageBack' }>(
