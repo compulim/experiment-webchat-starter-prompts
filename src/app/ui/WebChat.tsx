@@ -1,12 +1,12 @@
 import './WebChat.css';
 
 import { Components } from 'botframework-webchat';
-import { ActivityMiddleware, StyleOptions, type AttachmentMiddleware } from 'botframework-webchat-api';
+import { ActivityMiddleware } from 'botframework-webchat-api';
 import { FluentThemeProvider } from 'botframework-webchat-fluent-theme';
 import { memo, useCallback, useMemo, useRef, useState, type FormEventHandler, type FunctionComponent } from 'react';
+import CopilotStudioThemeProvider from '../embedded/CopilotStudioThemeProvider';
 import ActivitiesObserver, { type ActivitiesObserverProps } from './ActivitiesObserver';
-import StarterPrompts from './StarterPrompts';
-import isStarterPromptsActivity from './isStarterPromptsActivity';
+import isStarterPromptsActivity from '../embedded/isStarterPromptsActivity';
 
 const { BasicWebChat, Composer } = Components;
 
@@ -42,30 +42,6 @@ export default memo(function Chat({ createDirectLine }: Props) {
     [numActivitiesRef]
   );
 
-  const attachmentMiddleware = useMemo<AttachmentMiddleware>(
-    () =>
-      () =>
-      next =>
-      (...args) => {
-        const activity = args[0]?.activity;
-
-        if (activity && isStarterPromptsActivity(activity) && args[0]?.attachment.contentType === 'text/markdown') {
-          return (
-            <div>
-              {next(...args)}
-              <StarterPrompts cardActions={activity.suggestedActions.actions} />
-            </div>
-          );
-        }
-
-        return next(...args);
-      },
-    []
-  );
-
-  // TODO: Should we override Web Chat default of bubble max width of 480px?
-  const styleOptions = useMemo<StyleOptions>(() => ({ bubbleMaxWidth: 768 }), []);
-
   const [shouldUseFluentSkinpack, setShouldUseFluentSkinpack] = useState(true);
 
   const handleShouldUseFluentSkinpackClick = useCallback<FormEventHandler<HTMLInputElement>>(
@@ -80,15 +56,12 @@ export default memo(function Chat({ createDirectLine }: Props) {
   const directLine = useMemo(() => createDirectLine(), [createDirectLine, shouldUseFluentSkinpack]);
 
   const webChatElement = (
-    <Composer
-      activityMiddleware={activityMiddleware}
-      attachmentMiddleware={attachmentMiddleware}
-      directLine={directLine}
-      styleOptions={styleOptions}
-    >
-      <ActivitiesObserver onActivities={handleActivities} />
-      <BasicWebChat />
-    </Composer>
+    <CopilotStudioThemeProvider>
+      <Composer activityMiddleware={activityMiddleware} directLine={directLine}>
+        <ActivitiesObserver onActivities={handleActivities} />
+        <BasicWebChat />
+      </Composer>
+    </CopilotStudioThemeProvider>
   );
 
   return (
