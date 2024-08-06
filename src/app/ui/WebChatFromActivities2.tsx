@@ -2,7 +2,7 @@ import './WebChat.css';
 
 import { type Activity } from 'copilot-studio-direct-to-engine-chat-adapter';
 import { memo, useCallback, useEffect, useRef } from 'react';
-import injectStarterPrompts from '../embedded/injectStarterPrompts';
+import injectStarterPrompts from '../copilotStudio/injectStarterPrompts';
 import createDirectLineEmulator2, { type ActPostActivity } from '../util/createDirectLineEmulator2';
 import WebChat from './WebChat';
 

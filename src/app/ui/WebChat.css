@@ -5,9 +5,14 @@
   gap: 8px;
   grid-template-rows: 1fr auto;
   height: 100%;
+  overflow: hidden;
   position: relative;
 }
 
 .chat__fluent-toggle {
   font-family: 'Segoe UI';
+}
+
+.chat__webchat {
+  overflow: hidden;
 }

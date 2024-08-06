@@ -60,7 +60,7 @@ export default memo(function Chat({ createTurnGenerator }: Props) {
     <CopilotStudioThemeProvider>
       <Composer activityMiddleware={activityMiddleware} directLine={directLine}>
         <ActivitiesObserver onActivities={handleActivities} />
-        <BasicWebChat />
+        <BasicWebChat className="chat__webchat" />
       </Composer>
     </CopilotStudioThemeProvider>
   );

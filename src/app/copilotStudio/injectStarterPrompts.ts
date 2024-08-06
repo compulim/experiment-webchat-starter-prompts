@@ -69,7 +69,6 @@ export default function injectStarterPrompts(
       from: { id: '', role: 'bot' },
       suggestedActions: { to: [], actions: [...actions] },
       text: `<img alt="" src="${encodeURI(botImageURL)}" />\n\n## ${botName}\n\n${botDescription}`,
-      // text: `## ${botName}\n\n${botDescription}`,
       type: 'message'
     } satisfies Activity);
 
