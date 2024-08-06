@@ -21,7 +21,7 @@ export default function injectStarterPrompts(
   { actions, allowPublicWebsites, botDescription, botImageURL, botName }: InjectStarterPromptsInit
 ): TurnGenerator {
   const patchActivity = (activity: Readonly<Activity>): Activity => {
-    if (activity.type === 'message') {
+    if (activity.from.role !== 'user' && activity.type === 'message') {
       return {
         ...activity,
         entities: (activity.entities || []).map(entity => {
