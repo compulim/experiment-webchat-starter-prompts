@@ -1,8 +1,8 @@
 .starter-prompts {
   display: grid;
-  gap: 8px;
+  gap: 12px;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 10px; /* TODO: This is padding of Web Chat and should be retrieved from Web Chat instead of hardcoding here. */
+  padding: 0;
 }
 
 /* TODO: What is the good width to show as 3 columns? Web Chat, by default, has a bubble max width of 480px. */

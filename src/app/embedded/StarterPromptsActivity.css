@@ -1,0 +1,38 @@
+.starter-prompts-activity {
+  display: grid;
+  grid-template-areas: 'body' 'toolbar';
+  grid-template-rows: auto auto;
+  gap: 32px;
+
+  padding: 32px; /* Unproven number. */
+}
+
+.starter-prompts-activity__body {
+  font-family: var(--webchat-fontFamilyBase, 'Segoe UI');
+  font-size: 14px;
+  font-weight: 400;
+  grid-area: 'body';
+  line-height: 20px;
+  text-align: center;
+}
+
+.starter-prompts-activity__body h2 {
+  color: var(--webchat-colorNeutralForeground1, #242424);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 32px; /* Unproven number. */
+  line-height: 40px; /* Unproven number. */
+  margin: 16px 0 0;
+  /* font-size: 700; Unsure what 700 means. */
+  /* line-height: 700; Unsure what 700 means. */
+}
+
+.starter-prompts-activity__body img {
+  background-color: #304e7a;
+  border-radius: 4px;
+  height: 64px;
+}
+
+.starter-prompts-activity__toolbar {
+  grid-area: 'toolbar';
+}

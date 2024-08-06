@@ -1,8 +1,8 @@
-import { type AttachmentMiddleware, type StyleOptions } from 'botframework-webchat-api';
+import { type ActivityMiddleware, type StyleOptions } from 'botframework-webchat-api';
 import { Components } from 'botframework-webchat-component';
 import { memo, useMemo, type ReactNode } from 'react';
 import isStarterPromptsActivity from './isStarterPromptsActivity';
-import StarterPrompts from './StarterPrompts';
+import StarterPromptsActivity from './StarterPromptsActivity';
 
 type Props = {
   children?: ReactNode | undefined;
@@ -11,7 +11,7 @@ type Props = {
 const { ThemeProvider } = Components;
 
 export default memo(function CopilotStudioThemeProvider({ children }: Props) {
-  const attachmentMiddleware = useMemo<readonly AttachmentMiddleware[]>(
+  const activityMiddleware = useMemo<readonly ActivityMiddleware[]>(
     () =>
       Object.freeze([
         () =>
@@ -19,13 +19,8 @@ export default memo(function CopilotStudioThemeProvider({ children }: Props) {
           (...args) => {
             const activity = args[0]?.activity;
 
-            if (activity && isStarterPromptsActivity(activity) && args[0]?.attachment.contentType === 'text/markdown') {
-              return (
-                <div>
-                  {next(...args)}
-                  <StarterPrompts cardActions={activity.suggestedActions.actions} />
-                </div>
-              );
+            if (activity && isStarterPromptsActivity(activity)) {
+              return () => <StarterPromptsActivity activity={activity} />;
             }
 
             return next(...args);
@@ -38,7 +33,7 @@ export default memo(function CopilotStudioThemeProvider({ children }: Props) {
   const styleOptions = useMemo<StyleOptions>(() => ({ bubbleMaxWidth: 768 }), []);
 
   return (
-    <ThemeProvider attachmentMiddleware={attachmentMiddleware} styleOptions={styleOptions}>
+    <ThemeProvider activityMiddleware={activityMiddleware} styleOptions={styleOptions}>
       {children}
     </ThemeProvider>
   );
