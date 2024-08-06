@@ -14,11 +14,10 @@ type PropsOf<T> = T extends FunctionComponent<infer P> ? P : never;
 type ComposerProps = PropsOf<typeof Composer>;
 
 type Props = Readonly<{
-  directLine: ComposerProps['directLine'];
-  store: ComposerProps['store'];
+  createDirectLine: () => ComposerProps['directLine'];
 }>;
 
-export default memo(function Chat({ directLine, store }: Props) {
+export default memo(function Chat({ createDirectLine }: Props) {
   const numActivitiesRef = useRef<number>(0);
 
   const handleActivities = useCallback<ActivitiesObserverProps['onActivities']>(
@@ -76,12 +75,15 @@ export default memo(function Chat({ directLine, store }: Props) {
     [setShouldUseFluentSkinpack]
   );
 
+  // Every time "shouldUseFluentSkinpack" is flipped, we will re-render Web Chat.
+  // Re-render Web Chat will need a new Direct Line object as the previous one is already exhausted.
+  const directLine = useMemo(() => createDirectLine(), [createDirectLine, shouldUseFluentSkinpack]);
+
   const webChatElement = (
     <Composer
       activityMiddleware={activityMiddleware}
       attachmentMiddleware={attachmentMiddleware}
       directLine={directLine}
-      store={store}
       styleOptions={styleOptions}
     >
       <ActivitiesObserver onActivities={handleActivities} />
