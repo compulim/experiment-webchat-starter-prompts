@@ -30,7 +30,7 @@ export default memo(function CopilotStudioThemeProvider({ children }: Props) {
   );
 
   // TODO: Should we override Web Chat default of bubble max width of 480px?
-  const styleOptions = useMemo<StyleOptions>(() => ({ bubbleMaxWidth: 768 }), []);
+  const styleOptions = useMemo<StyleOptions>(() => ({ bubbleMaxWidth: 768, maxMessageLength: Infinity }), []);
 
   return (
     <ThemeProvider activityMiddleware={activityMiddleware} styleOptions={styleOptions}>
