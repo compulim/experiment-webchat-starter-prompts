@@ -1,9 +1,9 @@
 .recolor-monochrome-image {
-  background-color: #707070;
+  background-color: var(--webchat-colorNeutralForeground4, #707070);
 }
 
 @media (prefers-color-scheme: dark) {
   .recolor-monochrome-image {
-    background-color: Red; /* TODO: Should be #999 but need to double-check. */
+    background-color: var(--webchat-colorNeutralForeground4, #999);
   }
 }
