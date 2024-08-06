@@ -16,6 +16,7 @@ type InjectStarterPromptsInit = Readonly<{
   botName: string;
 }>;
 
+// Eventually, everything in this function should be done by the bot on the backend side.
 export default function injectStarterPrompts(
   turnGenerator: TurnGenerator,
   { actions, allowPublicWebsites, botDescription, botImageURL, botName }: InjectStarterPromptsInit
