@@ -3,21 +3,19 @@ import './WebChat.css';
 import { Components } from 'botframework-webchat';
 import { ActivityMiddleware } from 'botframework-webchat-api';
 import { FluentThemeProvider } from 'botframework-webchat-fluent-theme';
-import { memo, useCallback, useMemo, useRef, useState, type FormEventHandler, type FunctionComponent } from 'react';
+import { toDirectLineJS, type TurnGenerator } from 'copilot-studio-direct-to-engine-chat-adapter';
+import { memo, useCallback, useMemo, useRef, useState, type FormEventHandler } from 'react';
 import CopilotStudioThemeProvider from '../embedded/CopilotStudioThemeProvider';
-import ActivitiesObserver, { type ActivitiesObserverProps } from './ActivitiesObserver';
 import isStarterPromptsActivity from '../embedded/isStarterPromptsActivity';
+import ActivitiesObserver, { type ActivitiesObserverProps } from './ActivitiesObserver';
 
 const { BasicWebChat, Composer } = Components;
 
-type PropsOf<T> = T extends FunctionComponent<infer P> ? P : never;
-type ComposerProps = PropsOf<typeof Composer>;
-
 type Props = Readonly<{
-  createDirectLine: () => ComposerProps['directLine'];
+  createTurnGenerator: () => TurnGenerator;
 }>;
 
-export default memo(function Chat({ createDirectLine }: Props) {
+export default memo(function Chat({ createTurnGenerator }: Props) {
   const numActivitiesRef = useRef<number>(0);
 
   const handleActivities = useCallback<ActivitiesObserverProps['onActivities']>(
@@ -53,7 +51,10 @@ export default memo(function Chat({ createDirectLine }: Props) {
 
   // Every time "shouldUseFluentSkinpack" is flipped, we will re-render Web Chat.
   // Re-render Web Chat will need a new Direct Line object as the previous one is already exhausted.
-  const directLine = useMemo(() => createDirectLine(), [createDirectLine, shouldUseFluentSkinpack]);
+  const directLine = useMemo(
+    () => toDirectLineJS(createTurnGenerator()),
+    [createTurnGenerator, shouldUseFluentSkinpack]
+  );
 
   const webChatElement = (
     <CopilotStudioThemeProvider>
