@@ -35,9 +35,9 @@ export default function injectStarterPrompts(
             const keywords = new Set(entity.keywords || []).add('AIGeneratedContent');
 
             if (allowPublicWebsites) {
-              keywords.add('MayContainsPublicWebsites');
+              keywords.add('MayContainPublicWebsites');
             } else {
-              keywords.delete('MayContainsPublicWebsites');
+              keywords.delete('MayContainPublicWebsites');
             }
 
             return { ...entity, keywords: Array.from(keywords) };
@@ -66,6 +66,15 @@ export default function injectStarterPrompts(
 
   return (async function* () {
     yield patchActivity({
+      entities: [
+        {
+          '@context': 'https://schema.org',
+          '@id': '',
+          '@type': 'Message',
+          keywords: ['PreChatMessage'],
+          type: 'https://schema.org/Message'
+        }
+      ],
       from: { id: '', role: 'bot' },
       suggestedActions: { to: [], actions: [...actions] },
       text: `<img alt="" src="${encodeURI(botImageURL)}" />\n\n## ${botName}\n\n${botDescription}`,
